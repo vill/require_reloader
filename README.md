@@ -26,7 +26,7 @@ attributes):
       RequireReloader.watch_local_gems!
     end
 
-To reload a specific local gem specified in `Gemfile`:
+To reload a local gem specified in `Gemfile`:
     
     # config/environments/development.rb
     YourApp::Application.configure do
@@ -39,12 +39,12 @@ You can also reload a `.rb` file in `lib` or any directory:
     # config/environments/development.rb
     YourApp::Application.configure do
       ...
-      RequireReloader.watch :half_baked_gem  # in lib/ dir 
+      RequireReloader.watch :half_baked_gem  # in lib/
       RequireReloader.watch :foo, :path => 'app/models'
     end
 
 `:path` option is **optional**. In **Rails 3.2**, `:path` value will be 
-added into `watchable_dirs`. By default, RequireReloader already adds 
+added into `watchable_dirs`. RequireReloader already adds 
 `lib` and `vendor/gems` into `watchable_dirs`. So, you only need to
 specify `:path` if the file is located in other directory.
 
@@ -70,6 +70,11 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Credits
+
+This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyoung/gem_reloader), based on [a solution by Timothy Cardenas](http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve), inspired by [a post from Leitch](http://ileitch.github.com/2012/03/24/rails-32-code-reloading-from-lib.html).
+
 
 ## Changelog
 
