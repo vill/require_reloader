@@ -1,30 +1,59 @@
-# GemReloader
+# RequireReloader
 
-Stop restarting your server after editing local gems!
+Auto-reload local gems or `.rb` files that you `require`d
+**without restarting server** in Rails app development.
+
+Currently, it supports Rails 3+ and above, including 3.1 and 3.2.
+
+It uses `ActionDispatch::Callbacks.to_prepare` to reload the
+`require`d files before each request. In Rails 3.2, it uses 
+`watchable_dirs` to reload only when you modify a file.
 
 ## Usage
 
-In your `development.rb`, add:
+To reload **all** local gems in `Gemfile` (the ones with `:path`
+attributes):
 
-    GemReloader.watch :my_gem
+    # Gemfile
+    ..
+    gem 'my_gem',  :path => '~/work/my_gem'
+    gem 'my_gem2', :path => '~/fun/my_gem2'
+
+
+    # config/environments/development.rb
+    YourApp::Application.configure do
+      ...
+      RequireReloader.watch_local_gems!
+    end
+
+To reload a specific local gem specified in `Gemfile`:
     
-Or, if you want to watch **all** local gems:
+    # config/environments/development.rb
+    YourApp::Application.configure do
+      ...
+      RequireReloader.watch :my_gem
+    end
 
-    GemReloader.watch_all!
-    
-That's literally it. Tiny but useful.
+You can also reload a `.rb` file in `lib` or any directory:
 
-**Important Note**:
+    # config/environments/development.rb
+    YourApp::Application.configure do
+      ...
+      RequireReloader.watch :half_baked_gem  # in lib/ dir 
+      RequireReloader.watch :foo, :path => 'app/models'
+    end
 
-> If your gems are in irregular directories (directories that aren't in your `autoload_paths`), you'll need to add those paths in your `application.rb`. GemReloader will automatically add `vendor/gems` to the autoload_paths for you.
+`:path` option is **optional**. In **Rails 3.2**, `:path` value will be 
+added into `watchable_dirs`. By default, RequireReloader already adds 
+`lib` and `vendor/gems` into `watchable_dirs`. So, you only need to
+specify `:path` if the file is located in other directory.
 
-By the way, a gem will be picked up by `::watch_all!` if it has a :path attribute.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'gem_reloader'
+    gem 'require_reloader'
 
 And then execute:
 
@@ -32,7 +61,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install gem_reloader
+    $ gem install require_reloader
 
 ## Contributing
 
@@ -44,4 +73,5 @@ Or install it yourself as:
 
 ## Changelog
 
+- v0.1.0: Forked colinyoung/gem_reloader, renamed & major rewrite to support Rails 3.2 and new features.
 - v0.0.2: Added "vendor/gems" to the config.autoload_paths so the user doesn't have to.
