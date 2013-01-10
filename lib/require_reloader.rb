@@ -7,8 +7,6 @@ module RequireReloader
     # Reload all local gems (that is, ones which have a :path attribute)
     # automatically on each request.
     #
-    # In Rails 3.2+, reload happens only when a gem is modified.
-    #
     # To use it, add 'RequireReloader.watch_local_gems!' to
     # your config/environments/development.rb.
     #
@@ -24,14 +22,14 @@ module RequireReloader
     # Reload a specific gem or a gem-like .rb file
     # automatically on each request.
     #
-    # In Rails 3.2+, reload happens only when the gem is modified.
+    # In Rails 3.2+, reload happens only when a watchable file is modified.
     #
     # To use it, add 'RequireReloader.watch :my_gem' to
     # your config/environments/development.rb.
     #
     def watch(gem_name, opts={})
       gem            = gem_name.to_s
-      watchable_dir  = gem_path(gem, opts[:path])
+      watchable_dir  = expanded_gem_path(gem, opts[:path])
       watchable_exts = opts[:exts] ? Array(opts[:exts]) : [:rb]
 
       app = Object.const_get(Rails.application.class.parent_name)
@@ -41,8 +39,8 @@ module RequireReloader
           config.watchable_dirs[watchable_dir] = watchable_exts
         end
 
-        # This code (slightly modified) comes almost entirely from
-        # Tim Cardenas - http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve
+        # based on Tim Cardenas's solution:
+        # http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve
         ActionDispatch::Callbacks.to_prepare do
           klass = gem.classify
           Object.send(:remove_const, klass) if Object.const_defined?(klass)
