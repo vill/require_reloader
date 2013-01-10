@@ -1,5 +1,7 @@
 # RequireReloader
 
+[![Gem Version](https://badge.fury.io/rb/require_reloader.png)](http://badge.fury.io/rb/require_reloader)
+
 Auto-reload `require` files or local gems without restarting server
 during Rails development.
 
@@ -7,17 +9,20 @@ Currently, it supports Rails 3+ and above, including 3.1 and 3.2.
 
 It uses `ActionDispatch::Callbacks.to_prepare` to reload the
 `require` files before each request. In Rails 3.2, it uses 
-`watchable_dirs` to reload only when you modify a file.
+`watchable_dirs` to reload only when you modify a file. More details in [this blog post](http://teohm.github.com/blog/2013/01/10/reload-required-files-in-rails/).
 
 ## Usage
 
-To reload **all** local gems in `Gemfile` (the ones with `:path`
-attributes):
+Given a `Gemfile`
 
     # Gemfile
-    ..
     gem 'my_gem',  :path => '~/work/my_gem'
     gem 'my_gem2', :path => '~/fun/my_gem2'
+
+
+
+To reload all **local gems** (the ones with `:path` attributes):
+
 
 
     # config/environments/development.rb
@@ -26,27 +31,18 @@ attributes):
       RequireReloader.watch_local_gems!
     end
 
-To reload a local gem specified in `Gemfile`:
+To reload a specific local gem:
     
-    # config/environments/development.rb
-    YourApp::Application.configure do
-      ...
-      RequireReloader.watch :my_gem
-    end
+    RequireReloader.watch :my_gem
 
-You can also reload a `.rb` file in `lib` or any directory:
+You can also **reload a `.rb` file in `lib`** or any directory:
 
-    # config/environments/development.rb
-    YourApp::Application.configure do
-      ...
-      RequireReloader.watch :half_baked_gem  # in lib/
-      RequireReloader.watch :foo, :path => 'app/models'
-    end
+    RequireReloader.watch :half_baked_gem  # in lib dir
+    RequireReloader.watch :foo, :path => 'app/models'
 
-`:path` option is **optional**. In **Rails 3.2**, `:path` value will be 
-added into `watchable_dirs`. RequireReloader already adds 
-`lib` and `vendor/gems` into `watchable_dirs`. So, you only need to
-specify `:path` if the file is located in other directory.
+The `:path` option is *optional*. In **Rails 3.2**, `:path` value is added into `watchable_dirs`. Rails 3.1 and 3.0 ignore this value.
+
+RequireReloader adds `lib` and `vendor/gems` into `watchable_dirs`. So, specify `:path` only if the file is located in other directory.
 
 
 ## Installation
@@ -59,9 +55,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install require_reloader
 
 ## Contributing
 
