@@ -52,23 +52,16 @@ module RequireReloader
 
     private
 
-    PATH_REGEX = /gem[^'"]*['"]([^'"]+)['"].*path[^'"]+['"]([^'"]+)['"]/
-
-    def gem_path(gem, preferred_path)
+    def expanded_gem_path(gem, preferred_path)
       return File.expand_path(preferred_path) if preferred_path
       local_gem = local_gems.find {|g| g[:name] == gem}
       local_gem ? File.expand_path(local_gem[:path]) : false
     end
 
     def local_gems
-      Array.new.tap do |gems|
-        File.open(Rails.root.join('Gemfile'), 'rb').each do |ln|
-          matches = ln.match(PATH_REGEX)
-          if matches
-            gems << {name: matches[1], path: matches[2]}
-          end
-        end
-      end
+      Bundler.definition.specs.
+        select{|s| s.source.is_a?(Bundler::Source::Path) }.
+        map{|s| {:name => s.name, :path => s.source.path.to_s} }
     end
   end
 end
