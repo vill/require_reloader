@@ -78,6 +78,7 @@ This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyou
 
 ## Changelog
 
+- v0.1.2: Minor rephrase on gem's description and summary.
 - v0.1.1: Use Bundler to fetch local gems info, instead of parsing Gemfile by hand.
 - v0.1.0: Forked colinyoung/gem_reloader, renamed & major rewrite to support Rails 3.2 and new features.
 - v0.0.2: Added "vendor/gems" to the config.autoload_paths so the user doesn't have to.
