@@ -1,12 +1,12 @@
 # RequireReloader
 
-Auto-reload local gems or `.rb` files that you `require`'d
-**without restarting server** in Rails app development.
+Auto-reload `require` files or local gems without restarting server
+during Rails development.
 
 Currently, it supports Rails 3+ and above, including 3.1 and 3.2.
 
 It uses `ActionDispatch::Callbacks.to_prepare` to reload the
-`require`'d files before each request. In Rails 3.2, it uses 
+`require` files before each request. In Rails 3.2, it uses 
 `watchable_dirs` to reload only when you modify a file.
 
 ## Usage
