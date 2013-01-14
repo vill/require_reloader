@@ -19,11 +19,8 @@ Given a `Gemfile`
     gem 'my_gem',  :path => '~/work/my_gem'
     gem 'my_gem2', :path => '~/fun/my_gem2'
 
-
-
-To reload all **local gems** (the ones with `:path` attributes):
-
-
+To reload all **local gems** (the ones with `:path` attribute, 
+or using [local git repo](http://gembundler.com/v1.2/git.html#local)):
 
     # config/environments/development.rb
     YourApp::Application.configure do
