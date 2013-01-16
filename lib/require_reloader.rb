@@ -12,6 +12,9 @@ module RequireReloader
     #
     def watch_local_gems!
       local_gems.each do |gem|
+        # never reload itself for now, causing error raised in integration test
+        next if gem[:name] == 'require_reloader'
+
         watch gem[:name], :path => gem[:path]
       end
     end

@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Auto-reload require files or local gems without restarting Rails server.}
   gem.homepage      = "https://github.com/teohm/require_reloader"
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files         = `git ls-files`.split($\).reject{|f| f =~ /^test/}
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "require_reloader"
