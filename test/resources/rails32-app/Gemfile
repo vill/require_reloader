@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 gem 'sqlite3'
 
 gem 'sample_gem1', :path => 'gems/sample_gem1'
+gem 'sample_gem3', :path => 'vendor/gems/sample_gem3'
 gem 'require_reloader', :path => '../../..'
 
 # Gems used only for assets and not required

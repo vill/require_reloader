@@ -39,7 +39,8 @@ You can also **reload a `.rb` file in `lib`** or any directory:
 
 The `:path` option is *optional*. In **Rails 3.2**, `:path` value is added into `watchable_dirs`. Rails 3.1 and 3.0 ignore this value.
 
-RequireReloader adds `lib` and `vendor/gems` into `watchable_dirs`. So, specify `:path` only if the file is located in other directory.
+RequireReloader adds `lib` into `watchable_dirs`. So, specify `:path`
+only if it is not specified in `Gemfile` and the file is located in other directory.
 
 
 ## Installation
@@ -68,6 +69,7 @@ This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyou
 
 ## Changelog
 
+- v0.1.4: remove 'vendor/gems' from watchable_dirs & autoload_paths, as local gem path is already specified in Gemfile.
 - v0.1.3: Skip reload local gem if it's itself; added integration tests.
 - v0.1.2: Minor rephrase on gem's description and summary.
 - v0.1.1: Use Bundler to fetch local gems info, instead of parsing Gemfile by hand.
