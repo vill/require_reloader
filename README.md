@@ -69,6 +69,8 @@ This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyou
 
 ## Changelog
 
+- v0.1.5: properly guess top-level module name based on gem name
+pattern, only watch git repo if it's local.
 - v0.1.4: remove 'vendor/gems' from watchable_dirs & autoload_paths, as local gem path is already specified in Gemfile.
 - v0.1.3: Skip reload local gem if it's itself; added integration tests.
 - v0.1.2: Minor rephrase on gem's description and summary.
