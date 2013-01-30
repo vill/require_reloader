@@ -1,5 +1,6 @@
 require "require_reloader/version"
 require "require_reloader/railtie"
+require "require_reloader/helper"
 
 module RequireReloader
   class << self
@@ -34,6 +35,7 @@ module RequireReloader
       gem            = gem_name.to_s
       watchable_dir  = expanded_gem_path(gem, opts[:path])
       watchable_exts = opts[:exts] ? Array(opts[:exts]) : [:rb]
+      helper         = Helper.new
 
       app = Object.const_get(Rails.application.class.parent_name)
       app::Application.configure do
@@ -45,8 +47,7 @@ module RequireReloader
         # based on Tim Cardenas's solution:
         # http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve
         ActionDispatch::Callbacks.to_prepare do
-          klass = gem.classify
-          Object.send(:remove_const, klass) if Object.const_defined?(klass)
+          helper.remove_module_if_defined(gem)
           $".delete_if {|s| s.include?(gem)}
           require gem
         end
@@ -61,9 +62,11 @@ module RequireReloader
       local_gem ? File.expand_path(local_gem[:path]) : false
     end
 
+    # returns only local gems, local git repo
     def local_gems
       Bundler.definition.specs.
         select{|s| s.source.is_a?(Bundler::Source::Path) }.
+        delete_if{|s| s.source.is_a?(Bundler::Source::Git) && !s.source.send(:local?) }.
         map{|s| {:name => s.name, :path => s.source.path.to_s} }
     end
   end

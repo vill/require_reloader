@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "require_reloader"
   gem.require_paths = ["lib"]
   gem.version       = RequireReloader::VERSION
+
+  gem.add_development_dependency "minitest"
 end

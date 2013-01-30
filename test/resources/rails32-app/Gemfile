@@ -11,6 +11,12 @@ gem 'sample_gem1', :path => 'gems/sample_gem1'
 gem 'sample_gem3', :path => 'vendor/gems/sample_gem3'
 gem 'require_reloader', :path => '../../..'
 
+gem 'progress_bar', :git => 'git://github.com/paul/progress_bar.git',
+                    :branch => 'master'
+
+gem 'haml-rails', :git => 'git://github.com/indirect/haml-rails.git',
+                  :ref => 'dad799d', :require => 'haml'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
