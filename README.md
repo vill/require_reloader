@@ -42,7 +42,7 @@ The `:path` option is *optional*. In **Rails 3.2**, `:path` value is added into 
 RequireReloader adds `lib` into `watchable_dirs`. So, specify `:path`
 only if it is not specified in `Gemfile` and the file is located in other directory.
 
-    RequireReloader.watch :foot, :callback => lambda { |gem| puts "#{gem} got relaoded" }
+    RequireReloader.watch :foo, :callback => lambda { |gem| puts "#{gem} got reloaded" }
 
 You can supply a Proc with the *optional* `:callback` option. This proc gets called everytime after your gem got reloaded.
 
