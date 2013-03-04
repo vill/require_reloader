@@ -8,7 +8,7 @@ during Rails development.
 Currently, it supports Rails 3+ and above, including 3.1 and 3.2.
 
 It uses `ActionDispatch::Callbacks.to_prepare` to reload the
-`require` files before each request. In Rails 3.2, it uses 
+`require` files before each request. In Rails 3.2, it uses
 `watchable_dirs` to reload only when you modify a file. More details in [this blog post](http://teohm.github.com/blog/2013/01/10/reload-required-files-in-rails/).
 
 ## Usage
@@ -19,7 +19,7 @@ Given a `Gemfile`
     gem 'my_gem',  :path => '~/work/my_gem'
     gem 'my_gem2', :path => '~/fun/my_gem2'
 
-To reload all **local gems** (the ones with `:path` attribute, 
+To reload all **local gems** (the ones with `:path` attribute,
 or using [local git repo](http://gembundler.com/v1.2/git.html#local)):
 
     # config/environments/development.rb
@@ -29,7 +29,7 @@ or using [local git repo](http://gembundler.com/v1.2/git.html#local)):
     end
 
 To reload a specific local gem:
-    
+
     RequireReloader.watch :my_gem
 
 You can also **reload a `.rb` file in `lib`** or any directory:
@@ -42,6 +42,9 @@ The `:path` option is *optional*. In **Rails 3.2**, `:path` value is added into 
 RequireReloader adds `lib` into `watchable_dirs`. So, specify `:path`
 only if it is not specified in `Gemfile` and the file is located in other directory.
 
+    RequireReloader.watch :foo, :callback => lambda { |gem| puts "#{gem} got reloaded" }
+
+You can supply a Proc with the *optional* `:callback` option. This proc gets called everytime after your gem got reloaded.
 
 ## Installation
 

@@ -50,6 +50,7 @@ module RequireReloader
           helper.remove_module_if_defined(gem)
           $".delete_if {|s| s.include?(gem)}
           require gem
+          opts[:callback].call(gem) if opts[:callback]
         end
       end
     end
