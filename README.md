@@ -69,9 +69,11 @@ And then execute:
 
 This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyoung/gem_reloader), based on [a solution by Timothy Cardenas](http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve), inspired by [a post from Leitch](http://ileitch.github.com/2012/03/24/rails-32-code-reloading-from-lib.html).
 
+### Contributors
+- @sven-winkler: trigger callback after gem reloaded (issue #2)
 
 ## Changelog
-
+- v0.1.6: RequireReloader::watch accepts :callback, runs it after gem reloaded ([pull request](https://github.com/teohm/require_reloader/pull/2) from @sven-winkler). 
 - v0.1.5: properly guess top-level module name based on gem name
 pattern, only watch git repo if it's local.
 - v0.1.4: remove 'vendor/gems' from watchable_dirs & autoload_paths, as local gem path is already specified in Gemfile.
