@@ -41,7 +41,7 @@ The `:path` option is *optional*. In **Rails 3.2**, `:path` value is added into 
 
 The `:module_name` option is *optional*. By default, it is assumed that the top-level module is a CamelCase version of the gem name.
 If this is not the case, you can pass this option, a String. This value will also be picked up if included in the metadata of the gemspec,
-as in `spec.metadata = {module_name: 'MYMOD'}`.
+as in `spec.metadata = {'module_name' => 'MYMOD'}`.
 
 RequireReloader adds `lib` into `watchable_dirs`. So, specify `:path`
 only if it is not specified in `Gemfile` and the file is located in other directory.

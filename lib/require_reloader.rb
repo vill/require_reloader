@@ -16,7 +16,7 @@ module RequireReloader
         # never reload itself for now, causing error raised in integration test
         next if gem.name == 'require_reloader'
 
-        watch gem.name, :path => gem.source.path.to_s, :module_name => gem.metadata[:module_name]
+        watch gem.name, :path => gem.source.path.to_s, :module_name => gem.metadata['module_name']
       end
     end
 
