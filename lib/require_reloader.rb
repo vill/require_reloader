@@ -14,9 +14,9 @@ module RequireReloader
     def watch_local_gems!
       local_gems.each do |gem|
         # never reload itself for now, causing error raised in integration test
-        next if gem[:name] == 'require_reloader'
+        next if gem.name == 'require_reloader'
 
-        watch gem[:name], :path => gem[:path]
+        watch gem.name, :path => gem.source.path.to_s, :module_name => gem.metadata[:module_name]
       end
     end
 
@@ -47,7 +47,11 @@ module RequireReloader
         # based on Tim Cardenas's solution:
         # http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve
         ActionDispatch::Callbacks.to_prepare do
-          helper.remove_module_if_defined(gem)
+          if opts[:module_name]
+            helper.remove_module_if_defined(opts[:module_name])
+          else
+            helper.remove_gem_module_if_defined(gem)
+          end
           $".delete_if {|s| s.include?(gem)}
           require gem
           opts[:callback].call(gem) if opts[:callback]
@@ -59,16 +63,15 @@ module RequireReloader
 
     def expanded_gem_path(gem, preferred_path)
       return File.expand_path(preferred_path) if preferred_path
-      local_gem = local_gems.find {|g| g[:name] == gem}
-      local_gem ? File.expand_path(local_gem[:path]) : false
+      local_gem = local_gems.find {|g| g.name == gem}
+      local_gem ? File.expand_path(local_gem.source.path.to_s) : false
     end
 
     # returns only local gems, local git repo
     def local_gems
       Bundler.definition.specs.
         select{|s| s.source.is_a?(Bundler::Source::Path) }.
-        delete_if{|s| s.source.is_a?(Bundler::Source::Git) && !s.source.send(:local?) }.
-        map{|s| {:name => s.name, :path => s.source.path.to_s} }
+        delete_if{|s| s.source.is_a?(Bundler::Source::Git) && !s.source.send(:local?) }
     end
   end
 end
