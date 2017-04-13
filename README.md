@@ -78,6 +78,7 @@ This gem is forked from Colin Young's [gem_reloader](https://github.com/colinyou
 - @aceofspades: support gem metadata :module_name in Gemfile (issue #4)
 
 ## Changelog
+- v0.2.1: Add Rails 5.1 support ([pull request](https://github.com/teohm/require_reloader/pull/7) from @kibenimatik)
 - v0.2.0: Support module_name option/spec-metadata
 - v0.1.6: RequireReloader::watch accepts :callback, runs it after gem reloaded ([pull request](https://github.com/teohm/require_reloader/pull/2) from @sven-winkler).
 - v0.1.5: properly guess top-level module name based on gem name
