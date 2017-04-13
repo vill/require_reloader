@@ -79,6 +79,13 @@ module RequireReloader
       str.split("_").map{|token| token.capitalize }.join("")
     end
 
+    def to_prepare(&block)
+      if Rails::VERSION::MAJOR == 5
+        ActiveSupport::Reloader.to_prepare(&block)
+      else
+        ActionDispatch::Callbacks.to_prepare(&block)
+      end
+    end
   end
 
 end

@@ -46,7 +46,7 @@ module RequireReloader
 
         # based on Tim Cardenas's solution:
         # http://timcardenas.com/automatically-reload-gems-in-rails-327-on-eve
-        ActionDispatch::Callbacks.to_prepare do
+        helper.to_prepare do
           if opts[:module_name]
             helper.remove_module_if_defined(opts[:module_name])
           else
