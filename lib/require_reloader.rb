@@ -52,8 +52,11 @@ module RequireReloader
           else
             helper.remove_gem_module_if_defined(gem)
           end
-          $".delete_if {|s| s.include?(gem)}
+
+          $".delete_if {|s| s.include?(watchable_dir)}
+
           require gem
+
           opts[:callback].call(gem) if opts[:callback]
         end
       end
